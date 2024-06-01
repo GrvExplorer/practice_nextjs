@@ -1,7 +1,13 @@
-import { ClerkProvider } from "@clerk/nextjs/dist/types/components.server";
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,22 +21,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <ClerkProvider
+            appearance={{
+              baseTheme: dark
+            }}
+      >
         <body className={inter.className}>
-        <header>
+          <header>
             <SignedOut>
-              <SignInButton />
+              <SignInButton
+              />
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <UserButton appearance={''} />
             </SignedIn>
           </header>
-          <main>
-          {children}
-          </main>
-          </body>
-      </html>
-    </ClerkProvider>
+          <main>{children}</main>
+        </body>
+      </ClerkProvider>
+    </html>
   );
 }

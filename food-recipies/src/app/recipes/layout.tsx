@@ -1,5 +1,4 @@
 "use client";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IoSearch } from "react-icons/io5";
@@ -22,7 +21,7 @@ function RootLayoutRecipes({ children }: { children: React.ReactNode }) {
   }, 300);
 
   const handleMealType = (type: string) => {
-     if (type == 'All'){
+    if (type == 'All'){
       query.delete('mealType')
     }else if (type) {
       query.set("mealType", type);
@@ -55,6 +54,7 @@ function RootLayoutRecipes({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* TODO: Making glass-background link:"https://www.epicweb.dev/tips/creating-glassmorphism-effects-with-tailwind-css" */}
+
         <div className="flex justify-center gap-10 bg-green-100 pb-8 pt-10 md:text-2xl">
           <button className="rounded bg-green-400 px-2 text-white"
           onClick={() => handleMealType('All')}

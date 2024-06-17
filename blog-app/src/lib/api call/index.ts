@@ -60,7 +60,7 @@ export const updatePost = async (id: String, data:object) => {
       }),
     });
     const convert = await res.json();
-    return convert?.data;
+    return convert.data;
   } catch (error) {
     console.log(error);
   }

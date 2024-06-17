@@ -2,13 +2,13 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -21,14 +21,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { addPost } from "@/lib/api call";
+import { addPost, updatePost } from "@/lib/api call";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { revalidatePath } from "next/cache";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-function Popup({ type }: { type: "edit" | "add" }) {
+function Popup({
+  type,
+  id,
+  data,
+}: {
+  type: "edit" | "add";
+  id?: string;
+  data?: {
+    title: string;
+    description: string;
+  };
+}) {
   const withType = type == "add";
 
   const { toast } = useToast();
@@ -45,8 +56,8 @@ function Popup({ type }: { type: "edit" | "add" }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: !withType && data ? data.title : "",
+      description: !withType && data ? data.description : "",
     },
   });
 
@@ -54,20 +65,36 @@ function Popup({ type }: { type: "edit" | "add" }) {
     console.log(formData);
     const { title, description } = formData;
     try {
-      const { success, message } = await addPost({
-        title,
-        description,
-      });
-      if (success) {
-        form.reset({
-          title: "",
-          description: "",
+      // TODO: success is undefined initially and not getting the toast, getting error toast.
+      if (!withType && id) {
+        const { success, message } = await updatePost(id, formData);
+        if (success) {
+          form.reset({
+            title: "",
+            description: "",
+          });
+          toast({
+            title: message,
+            variant: "default",
+          });
+          return;
+        }
+      } else {
+        const { success, message } = await addPost({
+          title,
+          description,
         });
-
-        toast({
-          title: message,
-          variant: "default",
-        });
+        if (success) {
+          form.reset({
+            title: "",
+            description: "",
+          });
+          toast({
+            title: message,
+            variant: "default",
+          });
+          return;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -82,12 +109,18 @@ function Popup({ type }: { type: "edit" | "add" }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="relative bg-white p-[3px] py-5 hover:bg-white">
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500" />
-          <div className="group relative rounded-[6px] bg-black px-8 py-2 text-white transition duration-200 hover:bg-transparent">
-            {withType ? "Add Post" : "Edit Post"}
-          </div>
-        </Button>
+        {withType ? (
+          <Button className="relative bg-white p-[3px] py-5 hover:bg-white">
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500" />
+            <div className="group relative rounded-[6px] bg-black px-8 py-2 text-white transition duration-200 hover:bg-transparent">
+              Add Post
+            </div>
+          </Button>
+        ) : (
+          <button className="inline-flex animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 py-1 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+            Edit Post
+          </button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
@@ -164,10 +197,12 @@ function Popup({ type }: { type: "edit" | "add" }) {
         </Form>
         <DialogClose
           onClick={() => {
-            form.reset({
-              title: "",
-              description: "",
-            });
+            if (withType) {
+              form.reset({
+                title: "",
+                description: "",
+              });
+            }
             form.clearErrors(["description", "title"]);
           }}
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"

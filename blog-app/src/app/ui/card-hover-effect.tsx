@@ -4,6 +4,7 @@ import { deletePost } from "@/lib/api call";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import Popup from "./Dialog";
 export const HoverEffect = ({
   items,
   className,
@@ -34,7 +35,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-full w-full rounded-3xl bg-neutral-200 dark:bg-slate-800/[0.8]"
+                className="absolute inset-0 block h-full w-full rounded-3xl bg-red-300 dark:bg-slate-800/[0.8]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -53,12 +54,15 @@ export const HoverEffect = ({
             <CardDescription>{item.description}</CardDescription>
 
             <div className="mt-4 flex justify-between gap-4">
-              <button className="animate-shimmer inline-flex items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 py-1 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                Edit
-              </button>
-              <button 
-              onClick={() => deletePost(item._id)}
-              className="rounded-md border-2 border-transparent bg-red-500 px-8 py-2 font-bold text-white transition duration-200 hover:border-red-500 hover:bg-white hover:text-black">
+              <Popup
+                type="edit"
+                id={item._id}
+                data={{ title: item.title, description: item.description }}
+              />
+              <button
+                onClick={() => deletePost(item._id)}
+                className="rounded-md border-2 border-transparent bg-red-500 px-8 py-2 font-bold text-white transition duration-200 hover:border-red-500 hover:bg-white hover:text-black"
+              >
                 Delete
               </button>
             </div>

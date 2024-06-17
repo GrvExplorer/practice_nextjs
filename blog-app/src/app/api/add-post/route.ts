@@ -8,11 +8,11 @@ const AddPostValidate = z.object({
   description: z.string(),
 });
 
-export const POST = async (req: any) => {
+export const POST = async (req: Request) => {
   try {
     await connectToDB();
 
-    // grad the data from request
+    // get the data from request
     const extractBlogData = await req.json();
     const { title, description } = extractBlogData;
     

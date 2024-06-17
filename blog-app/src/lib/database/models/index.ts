@@ -5,6 +5,6 @@ const BlogSchema = new Schema({
   description: String,
 })
 
-const Blog = model('blog_post', BlogSchema)
+const Blog = models.blog_posts || model('blog_posts', BlogSchema)
 
 export default Blog;

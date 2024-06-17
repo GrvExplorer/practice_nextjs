@@ -1,6 +1,6 @@
-# Welcome! To 👋
+# Welcome! To 👋 Food Recipes
     
-  <p align="left"> <a href="" target="_blank" rel="noreferrer"> <img src="" alt="banner" /></a> </p>
+  <p align="left"> <a href="" target="_blank" rel="noreferrer"> <img src="./public/banner.png" alt="banner" /></a> </p>
 
 # My Social medial
 

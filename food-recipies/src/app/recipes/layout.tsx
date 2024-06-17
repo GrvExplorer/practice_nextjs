@@ -55,7 +55,7 @@ function RootLayoutRecipes({ children }: { children: React.ReactNode }) {
 
         {/* TODO: Making glass-background link:"https://www.epicweb.dev/tips/creating-glassmorphism-effects-with-tailwind-css" */}
 
-        <div className="flex justify-center gap-10 bg-green-100 pb-8 pt-10 md:text-2xl">
+        <div className="flex  flex-wrap justify-center gap-10 bg-green-100 pb-8 pt-10 md:text-2xl">
           <button className="rounded bg-green-400 px-2 text-white"
           onClick={() => handleMealType('All')}
           >All</button>

@@ -20,7 +20,7 @@
   ### My Progress 
 
   ### TODO's
-    - Revalidate paths when changes happen
+  - Revalidate paths when changes happen
 
 # Acknowledgments
 

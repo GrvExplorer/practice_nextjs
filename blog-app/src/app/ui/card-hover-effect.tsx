@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Popup from "./Dialog";
+import { useToast } from "@/components/ui/use-toast";
 export const HoverEffect = ({
   items,
   className,
@@ -17,6 +18,26 @@ export const HoverEffect = ({
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const { toast } = useToast()
+
+  const handleDelete = async (_id:string) => {
+    try {
+      const { success, message } = await deletePost(_id)
+      if (success) {
+        toast({
+          title: message,
+          variant: "default",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Some thing went wrong.",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <div
@@ -60,7 +81,7 @@ export const HoverEffect = ({
                 data={{ title: item.title, description: item.description }}
               />
               <button
-                onClick={() => deletePost(item._id)}
+                onClick={() => handleDelete(item._id)}
                 className="rounded-md border-2 border-transparent bg-red-500 px-8 py-2 font-bold text-white transition duration-200 hover:border-red-500 hover:bg-white hover:text-black"
               >
                 Delete

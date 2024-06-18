@@ -1,3 +1,6 @@
+'use server'
+import { revalidatePath } from "next/cache";
+
 export const addPost = async ({
   title,
   description,
@@ -15,6 +18,7 @@ export const addPost = async ({
       cache: "no-cache",
     });
     const convert = await res.json();
+    revalidatePath('/blogs')
     return convert;
   } catch (error) {
     console.log(error);
@@ -27,7 +31,7 @@ export const getAllBlogs = async () => {
       method: "GET",
       cache: "no-cache",
     });
-
+    revalidatePath('/blogs')
     const convert = await res.json();
     return convert?.data;
   } catch (error) {
@@ -42,8 +46,10 @@ export const deletePost = async (id: String) => {
       body: JSON.stringify({
         id,
       }),
+      cache: "no-cache",
     });
     const convert = await res.json();
+    revalidatePath('/blogs')
     return convert?.data;
   } catch (error) {
     console.log(error);
@@ -58,8 +64,10 @@ export const updatePost = async (id: String, data:object) => {
         id,
         data
       }),
+      cache: "no-cache",
     });
     const convert = await res.json();
+    revalidatePath('/blogs')
     return convert.data;
   } catch (error) {
     console.log(error);

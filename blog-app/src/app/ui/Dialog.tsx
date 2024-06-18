@@ -24,7 +24,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { addPost, updatePost } from "@/lib/api call";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { revalidatePath } from "next/cache";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -43,6 +43,8 @@ function Popup({
   const withType = type == "add";
 
   const { toast } = useToast();
+
+  const [openPopup, setOpenPopup] = useState(false)
 
   const formSchema = z.object({
     title: z.string().min(4, {
@@ -77,6 +79,7 @@ function Popup({
             title: message,
             variant: "default",
           });
+          setOpenPopup(false)
           return;
         }
       } else {
@@ -93,9 +96,11 @@ function Popup({
             title: message,
             variant: "default",
           });
+          setOpenPopup(false)
           return;
         }
       }
+
     } catch (error) {
       console.log(error);
       toast({
@@ -107,7 +112,7 @@ function Popup({
   };
 
   return (
-    <Dialog>
+    <Dialog open={openPopup} onOpenChange={setOpenPopup}>
       <DialogTrigger asChild>
         {withType ? (
           <Button className="relative bg-white p-[3px] py-5 hover:bg-white">

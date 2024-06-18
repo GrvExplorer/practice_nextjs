@@ -3,8 +3,6 @@ import React from "react";
 import Popup from "../ui/Dialog";
 import { HoverEffect } from "../ui/card-hover-effect";
 
-export const dynamic = "force-dynamic";
-
 async function Blogs() {
   const blogList = await getAllBlogs();
 

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Popup from "./Dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { deletePostAction } from "@/lib/server action";
 export const HoverEffect = ({
   items,
   className,
@@ -23,7 +24,7 @@ export const HoverEffect = ({
 
   const handleDelete = async (_id:string) => {
     try {
-      const { success, message } = await deletePost(_id)
+      const { success, message } = await deletePostAction(_id)
       if (success) {
         toast({
           title: message,

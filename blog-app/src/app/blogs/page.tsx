@@ -1,10 +1,11 @@
 import { getAllBlogs } from "@/lib/api call";
+import { fetchAllPosts } from "@/lib/server action/data";
 import React from "react";
 import Popup from "../ui/Dialog";
 import { HoverEffect } from "../ui/card-hover-effect";
 
 async function Blogs() {
-  const blogList = await getAllBlogs();
+  const { blogList, success } = await fetchAllPosts();
 
   return (
     <div>
@@ -16,7 +17,7 @@ async function Blogs() {
         <Popup type="add" />
       </div>
 
-      {blogList && blogList.length > 0 ? (
+      {blogList && blogList.length > 0  && success ? (
         <div className="mx-auto max-w-5xl px-8">
           <HoverEffect items={blogList} />
         </div>

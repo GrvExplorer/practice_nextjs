@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { addPost, updatePost } from "@/lib/api call";
+import { createPostAction, editPostAction } from "@/lib/server action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -44,7 +45,7 @@ function Popup({
 
   const { toast } = useToast();
 
-  const [openPopup, setOpenPopup] = useState(false)
+  const [openPopup, setOpenPopup] = useState(false);
 
   const formSchema = z.object({
     title: z.string().min(4, {
@@ -69,7 +70,7 @@ function Popup({
     try {
       // TODO: success is undefined initially and not getting the toast, getting error toast.
       if (!withType && id) {
-        const { success, message } = await updatePost(id, formData);
+        const { success, message, error } = await editPostAction(id, formData);
         if (success) {
           form.reset({
             title: "",
@@ -79,11 +80,21 @@ function Popup({
             title: message,
             variant: "default",
           });
-          setOpenPopup(false)
+          setOpenPopup(false);
           return;
+        } else if (error) {
+          form.reset({
+            title: "",
+            description: "",
+          });
+          toast({
+            title: message,
+            variant: "destructive",
+          });
+          setOpenPopup(false);
         }
       } else {
-        const { success, message } = await addPost({
+        const { success, message, error } = await createPostAction({
           title,
           description,
         });
@@ -96,11 +107,20 @@ function Popup({
             title: message,
             variant: "default",
           });
-          setOpenPopup(false)
+          setOpenPopup(false);
           return;
+        } else if (error) {
+          form.reset({
+            title: "",
+            description: "",
+          });
+          toast({
+            title: message,
+            variant: "destructive",
+          });
+          setOpenPopup(false);
         }
       }
-
     } catch (error) {
       console.log(error);
       toast({

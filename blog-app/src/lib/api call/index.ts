@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { revalidatePath } from "next/cache";
 
 export const addPost = async ({
@@ -18,7 +18,7 @@ export const addPost = async ({
       cache: "no-cache",
     });
     const convert = await res.json();
-    revalidatePath('/blogs')
+    revalidatePath("/blogs");
     return convert;
   } catch (error) {
     console.log(error);
@@ -31,9 +31,13 @@ export const getAllBlogs = async () => {
       method: "GET",
       cache: "no-cache",
     });
-    revalidatePath('/blogs')
+    revalidatePath("/blogs");
     const convert = await res.json();
-    return convert?.data;
+    return {
+      blogList: convert?.data,
+      success: true,
+      message: "Got all post available",
+    };
   } catch (error) {
     console.log(error);
   }
@@ -49,25 +53,25 @@ export const deletePost = async (id: String) => {
       cache: "no-cache",
     });
     const convert = await res.json();
-    revalidatePath('/blogs')
+    revalidatePath("/blogs");
     return convert?.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const updatePost = async (id: String, data:object) => {
+export const updatePost = async (id: String, data: object) => {
   try {
     const res = await fetch("http://localhost:3000/api/update-post", {
       method: "PUT",
       body: JSON.stringify({
         id,
-        data
+        data,
       }),
       cache: "no-cache",
     });
     const convert = await res.json();
-    revalidatePath('/blogs')
+    revalidatePath("/blogs");
     return convert.data;
   } catch (error) {
     console.log(error);

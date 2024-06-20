@@ -15,6 +15,8 @@ export const HoverEffect = ({
     title: string;
     description: string;
     _id: string;
+    createdAt: string | null;
+    updatedAt: string | null;
   }[];
   className?: string;
 }) => {

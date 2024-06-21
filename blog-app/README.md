@@ -18,9 +18,9 @@
   ### Further development
 
   ### My Progress 
+  - Revalidate paths when changes happen
 
   ### TODO's
-  - Revalidate paths when changes happen
   - strategies for rendering on demand
   <p align="left"> <a href="" target="_blank" rel="noreferrer"> <img src="./public/image.png" alt="banner" /></a> </p>
 

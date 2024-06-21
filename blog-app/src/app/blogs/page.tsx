@@ -5,10 +5,15 @@ import React from "react";
 import BlogUserAvatar from "../ui/BlogUserAvatar";
 import Popup from "../ui/Dialog";
 import { HoverEffect } from "../ui/card-hover-effect";
+import { redirect } from "next/navigation";
 
 async function Blogs() {
   const { blogList, success } = await fetchAllPosts();
-  const { user, } = await fetchUserAuthToken();
+  const { user } = await fetchUserAuthToken();
+
+  if (!user) {
+    redirect('/auth/sign-in')
+  }
 
   return (
     <div>

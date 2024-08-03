@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 import Rating from "../ui/Ratings";
 
 async function Recipes({ searchParams }: any) {
-  // TODO: Check If it is dynamic on production.
   // !! export const dynamic = 'force-dynamic'
 
   // !! Making dynamic from fetch using => cache: 'no-cache'
@@ -21,7 +20,6 @@ async function Recipes({ searchParams }: any) {
     recipes = res.recipes;
   }
 
-  // TODO: Fix Side Dish
   if (searchParams.mealType) {
     console.log(searchParams);
     if (searchParams.mealType != null)
@@ -120,7 +118,7 @@ async function Recipes({ searchParams }: any) {
                   </div>
                 </div>
 
-                {/* TODO: Make rating work properly */}
+
                 <div className="flex w-full items-center justify-between gap-4">
                   <Rating rating={rating} />
                   <p className="mt-4 text-center text-yellow-300">

@@ -24,6 +24,9 @@
   - strategies for rendering on demand
   <p align="left"> <a href="" target="_blank" rel="noreferrer"> <img src="./public/image.png" alt="banner" /></a> </p>
 
+  - Confirm password check [open](./src/app/auth/sign-up/page.tsx) 28
+  - success is undefined initially and not getting the toast, getting error toast. [open](./src/app/ui/Dialog.tsx) 71
+
 
 # Acknowledgments
 

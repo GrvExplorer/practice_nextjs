@@ -41,7 +41,7 @@ function RootLayoutRecipes({ children }: { children: React.ReactNode }) {
             </h1>
           </Link>
 
-          {/* TODO: Making border on parent when focused on search:input */}
+         
           <div className="parent flex items-center gap-2 rounded-xl bg-white px-2 py-1">
             <IoSearch className="text-xl" />
             <input
@@ -53,7 +53,7 @@ function RootLayoutRecipes({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* TODO: Making glass-background link:"https://www.epicweb.dev/tips/creating-glassmorphism-effects-with-tailwind-css" */}
+
 
         <div className="flex  flex-wrap justify-center gap-10 bg-green-100 pb-8 pt-10 md:text-2xl">
           <button className="rounded bg-green-400 px-2 text-white"

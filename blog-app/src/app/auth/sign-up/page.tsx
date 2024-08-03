@@ -24,8 +24,7 @@ import { z } from "zod";
 function SignUp() {
   const { toast } = useToast();
   const router = useRouter()
-
-  // TODO: Confirm password check
+  
   const signSchema = z.object({
     username: z
       .string({

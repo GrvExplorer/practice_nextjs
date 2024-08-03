@@ -7,13 +7,17 @@ import Popup from "../ui/Dialog";
 import { HoverEffect } from "../ui/card-hover-effect";
 import { redirect } from "next/navigation";
 
+
 async function Blogs() {
   const { blogList, success } = await fetchAllPosts();
   const { user } = await fetchUserAuthToken();
 
+  // FIXME: check if token is valid
+
   if (!user) {
     redirect('/auth/sign-in')
   }
+
 
   return (
     <div>

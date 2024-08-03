@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// TODO: Middleware working
+
 export function middleware(request: NextRequest) {
   const isAuthenticated = false;
 

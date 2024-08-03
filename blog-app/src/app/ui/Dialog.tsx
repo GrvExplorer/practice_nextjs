@@ -68,7 +68,7 @@ function Popup({
     console.log(formData);
     const { title, description } = formData;
     try {
-      // TODO: success is undefined initially and not getting the toast, getting error toast.
+
       if (!withType && id) {
         const { success, message, error } = await editPostAction(id, formData);
         if (success) {
